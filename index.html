@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pink Counter App</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        pink: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom smooth button animation styling */
+        .btn-press {
+            transition: all 0.15s ease-in-out;
+        }
+        .btn-press:active {
+            transform: scale(0.92);
+        }
+        /* Scale animation when number updates */
+        .number-bump {
+            animation: bump 0.2s ease-in-out;
+        }
+        @keyframes bump {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-100 via-pink-200 to-pink-300 min-h-screen flex items-center justify-center p-4 font-sans text-pink-900 select-none">
+
+    <!-- Counter Main Card -->
+    <main class="w-full max-w-sm bg-white/80 backdrop-blur-md rounded-3xl p-8 shadow-2xl border border-pink-200 flex flex-col items-center text-center">
+        
+        <!-- Header Title -->
+        <div class="mb-6">
+            <span class="inline-block p-3 bg-pink-100 rounded-full text-pink-500 mb-2 shadow-inner">
+                <i class="fa-solid fa-heart text-2xl"></i>
+            </span>
+            <h1 class="text-2xl font-bold tracking-tight text-pink-700">Pink Counter</h1>
+            <p class="text-xs text-pink-400 font-medium">Simple & Cute Tally</p>
+        </div>
+
+        <!-- Count Display Box -->
+        <div class="w-full bg-pink-50/80 rounded-2xl p-6 mb-8 border border-pink-100 shadow-inner flex justify-center items-center h-36">
+            <span id="counter" class="text-6xl font-extrabold text-pink-600 transition-all duration-200">
+                0
+            </span>
+        </div>
+
+        <!-- Action Buttons Section -->
+        <div class="grid grid-cols-2 gap-4 w-full mb-4">
+            <!-- Decrement Button -->
+            <button id="decrement-btn" onclick="decrement()" class="btn-press bg-pink-200 hover:bg-pink-300 active:bg-pink-400 text-pink-700 font-bold py-4 rounded-2xl text-xl shadow-md flex justify-center items-center gap-2 focus:outline-none focus:ring-2 focus:ring-pink-400">
+                <i class="fa-solid fa-minus"></i>
+            </button>
+
+            <!-- Increment Button -->
+            <button id="increment-btn" onclick="increment()" class="btn-press bg-pink-500 hover:bg-pink-600 active:bg-pink-700 text-white font-bold py-4 rounded-2xl text-xl shadow-lg shadow-pink-300 flex justify-center items-center gap-2 focus:outline-none focus:ring-2 focus:ring-pink-500">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+
+        <!-- Reset Button -->
+        <button onclick="resetCount()" class="btn-press text-xs font-semibold text-pink-400 hover:text-pink-600 py-2 px-4 rounded-xl transition duration-200 flex items-center gap-1.5 focus:outline-none">
+            <i class="fa-solid fa-rotate-right"></i> Reset Counter
+        </button>
+
+    </main>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // State variable
+        let count = 0;
+
+        // DOM Element references
+        const counterEl = document.getElementById('counter');
+
+        // Function to update the DOM display with animation trigger
+        function updateDisplay() {
+            counterEl.textContent = count;
+            
+            // Trigger animation
+            counterEl.classList.remove('number-bump');
+            // Force reflow
+            void counterEl.offsetWidth;
+            counterEl.classList.add('number-bump');
+        }
+
+        // Increment count
+        function increment() {
+            count++;
+            updateDisplay();
+        }
+
+        // Decrement count
+        function decrement() {
+            count--;
+            updateDisplay();
+        }
+
+        // Reset count to zero
+        function resetCount() {
+            count = 0;
+            updateDisplay();
+        }
+    </script>
+</body>
+</html>
